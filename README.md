@@ -13,3 +13,4 @@ It provides the following APIs:
 - `POST /avatar/get/{primaryUsername}` to retrieve the picture via the primaryUsername
 
 For now all of these APIs are internal. We will open up the retrieving endpoints soon.
+
