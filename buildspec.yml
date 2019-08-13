@@ -3,9 +3,11 @@ version: 0.2
 phases:
   install:
     commands:
+      - echo "this is my second test"
       - ". ci/install_deps.sh"
   pre_build:
     commands:
+      - echo "this is my test"
       - export COMMIT_SHA=$CODEBUILD_RESOLVED_SOURCE_VERSION
       - export CODEBUILD_WEBHOOK_TRIGGER=${CODEBUILD_WEBHOOK_TRIGGER:-branch/master}
       - export DEPLOY_ENV=$(echo $CODEBUILD_WEBHOOK_TRIGGER | sed -e 's/tag\/.*-\(.*\)/\1/' | sed -e 's/branch\/master/dev/')
