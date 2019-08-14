@@ -26,8 +26,8 @@ resource "aws_codebuild_project" "build" {
     privileged_mode = "true"
 
     environment_variable {
-      "name"  = "DOCKER_REPO"
-      "value" = "${aws_ecr_repository.registry.repository_url}"
+      name  = "DOCKER_REPO"
+      value = "${aws_ecr_repository.registry.repository_url}"
     }
   }
 
@@ -51,7 +51,17 @@ resource "aws_codebuild_project" "build" {
 # Unomment this section if you do want to build automatically on push
 resource "aws_codebuild_webhook" "webhook" {
   project_name  = "${aws_codebuild_project.build.name}"
-  branch_filter = "^master$"
+  filter_group {
+    filter {
+      type    = "EVENT"
+      pattern = "PUSH"
+    }
+
+    filter {
+      type    = "HEAD_REF"
+      pattern = "(^refs/heads/master$|^refs/tags/.*-(prod|test))"
+    }
+  }
 }
 
 #---
